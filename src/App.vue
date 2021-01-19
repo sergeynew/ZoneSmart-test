@@ -1,7 +1,6 @@
 <template lang="pug">
     #app
-        pre {{process.env.VUE_APP_BASE_API_URL }}
-        router-view
+        <router-view></router-view>
 </template>
 
 <script>

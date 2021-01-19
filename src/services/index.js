@@ -1,2 +1,3 @@
-export * from './_auth.service'
-export * from './_orders.service'
+export * from './auth.service'
+export * from './orders.service'
+export * from './auth_header.service'

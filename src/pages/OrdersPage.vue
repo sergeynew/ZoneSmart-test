@@ -1,5 +1,6 @@
 <template lang="pug">
     #orders-page
+        h1.page-title Orders page component
         .orders-table
 </template>
 

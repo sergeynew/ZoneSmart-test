@@ -8,7 +8,8 @@ module.exports = {
         resolve: {
             alias: {
                 '@': path.join(__dirname, vueSrc)
-            }
+            },
+            symlinks: false
         }
     }
 }
