@@ -1,6 +1,8 @@
 <template lang="pug">
     #app
-        <router-view></router-view>
+        .container
+            <router-view></router-view>
+        .example
 </template>
 
 <script>

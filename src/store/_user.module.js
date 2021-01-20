@@ -6,18 +6,17 @@ const initialState = storedUser
     ? { status: { loggedIn: true }, user: storedUser }
     : { status: {}, user: null };
 
-export const authentication = {
+export const user = {
     namespaced: true,
     state: initialState,
 
     actions: {
-        login ({ commit }, { username, password }) {
-            commit('LOGIN_REQUEST', { username });
-
-            AuthService.login(username, password)
+        login ({ commit }, { email, password }) {
+            commit('LOGIN_REQUEST', { email });
+            AuthService.login(email, password)
                 .then(
-                    (user) => {
-                        commit('LOGIN_SUCCESS', user);
+                    (response) => {
+                        commit('LOGIN_SUCCESS', response.data);
                         router.push('/');
                     },
                     (error) => {
@@ -33,18 +32,18 @@ export const authentication = {
     },
 
     mutations: {
-        LOGIN_REQUEST (state, user) {
+        LOGIN_REQUEST (state, userData) {
             state.status = { loggingIn: true };
-            state.user = user;
+            state.user = userData;
         },
 
-        LOGIN_SUCCESS (state, user) {
+        LOGIN_SUCCESS (state, userData) {
             state.status = { loggedIn: true };
-            state.user = user;
+            state.user = userData;
         },
 
         LOGIN_FAILURE (state) {
-            state.status = {};
+            state.status = { loginFailure: true }
             state.user = null;
         },
 

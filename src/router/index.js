@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router'
 import OrdersPage from '@/pages/OrdersPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
+import { LocalStorageService } from '@/services';
 
 Vue.use(Router);
 
@@ -21,7 +22,7 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     // redirect to login page if user not logged in.
     const authRequired = !publicPagesUrls.includes(to.path);
-    const loggedIn = localStorage.getItem('user');
+    const loggedIn = LocalStorageService.getAccessToken();
 
     if (authRequired && !loggedIn) {
         return next('/login');

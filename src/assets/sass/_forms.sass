@@ -1,0 +1,32 @@
+.form-input
+    position: relative
+    display: flex
+    flex-direction: column
+    width: 100%
+    margin: 15px 0
+
+    .form-control
+        height: 50px
+        border: 1px solid $form-border-color
+        border-radius: 5px
+        font-size: 1rem
+        font-weight: 500
+        padding: 0 15px
+        color: $dark-font-color
+
+        &::placeholder
+            font-weight: 400
+        
+        &:focus, &:active 
+            border: 1px solid $light-green-color
+            outline: none
+    &__icon
+        position: absolute
+        top: 50%
+        right: 10px
+        transform: translateY(-50%)
+    &_error
+        .form-control, 
+        .form-control:focus,
+        .form-control:active
+            border-color: $error-red-color

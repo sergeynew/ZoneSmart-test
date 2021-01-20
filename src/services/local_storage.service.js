@@ -1,5 +1,6 @@
 export const LocalStorageService = {
     setTokens,
+    setAccessToken,
     getAccessToken,
     getRefreshToken,
     clearToken
@@ -8,6 +9,10 @@ export const LocalStorageService = {
 function setTokens (tokens) {
     localStorage.setItem('access_token', tokens.access);
     localStorage.setItem('refresh_token', tokens.refresh);
+}
+
+function setAccessToken (accessToken) {
+    localStorage.setItem('access_token', accessToken);
 }
 
 function getAccessToken () {
