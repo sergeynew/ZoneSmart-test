@@ -12,11 +12,11 @@ export const user = {
 
     actions: {
         login ({ commit }, { email, password }) {
-            commit('LOGIN_REQUEST', { email });
+            commit('LOGIN_REQUEST', email);
             AuthService.login(email, password)
                 .then(
                     (response) => {
-                        commit('LOGIN_SUCCESS', response.data);
+                        commit('LOGIN_SUCCESS', email);
                         router.push('/');
                     },
                     (error) => {
@@ -32,14 +32,14 @@ export const user = {
     },
 
     mutations: {
-        LOGIN_REQUEST (state, userData) {
+        LOGIN_REQUEST (state, userName) {
             state.status = { loggingIn: true };
-            state.user = userData;
+            state.user = userName;
         },
 
-        LOGIN_SUCCESS (state, userData) {
+        LOGIN_SUCCESS (state, userName) {
             state.status = { loggedIn: true };
-            state.user = userData;
+            state.user = userName;
         },
 
         LOGIN_FAILURE (state) {

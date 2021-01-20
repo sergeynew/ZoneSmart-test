@@ -1,9 +1,9 @@
-import { LocalStorageService } from './local_storage.service'
+import { TokensStorageService } from './tokens_storage.service'
 
-export function authHeader () {
-    const accessToken = LocalStorageService.getAccessToken();
+export const authHeader = () => {
+    const accessToken = TokensStorageService.getAccessToken()
     if (accessToken) {
-        return { Authorization: `JWT ${accessToken}` };
+        return { Authorization: `JWT ${accessToken}` }
     }
-    return {};
+    return {}
 }

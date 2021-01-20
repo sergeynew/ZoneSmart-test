@@ -1,4 +1,4 @@
-export * from './auth.service'
 export * from './orders.service'
-export * from './auth_header.service'
-export * from './local_storage.service'
+export * from './auth.service'
+export * from './api.service'
+export * from './tokens_storage.service'

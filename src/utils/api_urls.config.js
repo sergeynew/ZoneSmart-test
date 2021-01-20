@@ -3,10 +3,10 @@ const auth = {
     JWT_REFRESH_URL: '/auth/jwt/refresh/'
 }
 const orders = {
-    INDEX_URL: 'zonesmart/order/'
+    ORDER_INDEX_URL: '/zonesmart/order/'
 }
 
-export default {
+export const API_URLS = {
     orders,
     auth
 }
