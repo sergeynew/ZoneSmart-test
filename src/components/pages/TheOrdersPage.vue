@@ -5,6 +5,9 @@
             DataTable(
                 :fields="tableFields",
                 :tableData="ordersList"
+                :settings="pagination"
+                @select-all="onSelectAll"
+                @select-item="onOrderItemSelect"
             )
 </template>
 
@@ -18,7 +21,12 @@ export default {
     },
     data () {
         // offset and limit as local here
-        return {}
+        return {
+            pagination: {
+                limit: 5,
+                offset: 0
+            }
+        }
     },
 
     created () {
@@ -28,17 +36,23 @@ export default {
     computed: {
         ...mapState({
             ordersList: (state) => state.orders.ordersList,
+            selectedOrdersList: (state) => state.orders.selectedOrdersList,
             tableFields: (state) => state.orders.tableFields
         })
     },
 
     methods: {
         getOrders () {
-            const params = {
-                limit: 15,
-                offset: 0
-            }
-            this.$store.dispatch('orders/getOrders', params)
+            const { offset, limit } = this.pagination
+            this.$store.dispatch('orders/getOrders', { offset, limit })
+        },
+
+        onSelectAll (isSelect) {
+            this.$store.dispatch('orders/selectUnselectAllOrders', isSelect)
+        },
+
+        onOrderItemSelect (params) {
+            this.$store.dispatch('orders/selectUnselectOrderItem', params)
         }
     }
 }

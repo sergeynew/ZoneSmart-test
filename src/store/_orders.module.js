@@ -5,6 +5,8 @@ export const orders = {
     namespaced: true,
     state: {
         ordersList: {},
+        selectedOrdersList: {},
+        allOrdersSelectedFlag: false,
         tableFields: {
             id: {
                 title: 'Номер заказа',
@@ -42,18 +44,55 @@ export const orders = {
                 title: 'Итоговая цена',
                 type: 'price'
             }
+        },
+        subFields: {
+            sku: {
+                title: 'SKU',
+                type: 'text'
+            },
+            title: {
+                title: 'Название',
+                type: 'text'
+            },
+            quantity: {
+                title: 'Количество',
+                type: 'text'
+            },
+            totalPrice: {
+                title: 'Цена',
+                type: 'price'
+            },
+            image_url: {
+                title: 'Изображение',
+                type: 'text'
+            }
         }
     },
     actions: {
-        getOrders ({ commit }, params) {
-            OrdersService.get(params)
-                .then((response) => {
-                    const ordersArray = response.data.results
-                    commit('SET_ORDERS', ordersArray)
-                })
-                .catch((e) => {
-                    console.error(e)
-                })
+        async getOrders ({ commit }, params) {
+            try {
+                const result = await OrdersService.get(params)
+                commit('SET_ORDERS', result.data.results)
+            } catch (e) {
+                throw Error(e)
+            }
+        },
+
+        selectUnselectAllOrders ({ commit }, isSelect) {
+            if (isSelect) {
+                commit('SELECT_ALL')
+            } else {
+                commit('UNSELECT_ALL')
+            }
+        },
+
+        selectUnselectOrderItem ({ commit }, params) {
+            const { flag, id } = params
+            if (flag) {
+                commit('SELECT_ORDER', id)
+            } else {
+                commit('UNSELECT_ORDER', id)
+            }
         }
     },
     mutations: {
@@ -66,11 +105,26 @@ export const orders = {
             state.ordersList = ordersObjects
         },
 
-        SET_PARAMS (state, params) {
+        SELECT_ALL (state) {
+            state.allOrdersSelectedFlag = true
+            Object.assign(state.selectedOrdersList, state.ordersList)
         },
 
-        CLEAR_STATE (state) {
-            state.orders = {}
+        UNSELECT_ALL (state) {
+            state.allOrdersSelectedFlag = false
+            state.selectedOrdersList = {}
+        },
+
+        SELECT_ORDER (state, id) {
+            Object.assign(state.selectedOrdersList, { [id]: state.ordersList[id] })
+            const ordersLength = Object.keys(state.ordersList).length
+            const selectedLength = Object.keys(state.selectedOrdersList).length
+            state.allOrdersSelectedFlag = ordersLength === selectedLength
+        },
+
+        UNSELECT_ORDER (state, id) {
+            state.allOrdersSelectedFlag = false
+            delete state.selectedOrdersList[id]
         }
     }
 }

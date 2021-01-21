@@ -32,10 +32,6 @@ export default {
         cellComponentName () {
             return `${this.fieldType}Item`
         }
-    },
-
-    methods: {
-
     }
 }
 </script>

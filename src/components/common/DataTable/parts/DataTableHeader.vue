@@ -1,5 +1,11 @@
 <template lang='pug'>
     .table-header
+        .table-header__item
+            input.mass-select(
+                type="checkbox",
+                :checked="allItemsSelected",
+                @click="onSelectAll($event)"
+            )
         .table-header__item.data-item(
             v-for="fieldValue, key in fields"
             v-if="!Array.isArray(fieldValue)"
@@ -15,12 +21,22 @@ export default {
             type: Object,
             required: true,
             default: () => {}
+        },
+        allItemsSelected: {
+            type: Boolean,
+            default: () => false
+        }
+    },
+
+    methods: {
+        onSelectAll ($event) {
+            this.$emit('select-all', $event.target.checked)
         }
     },
 
     computed: {
         ceilDefaultWidth () {
-            const percents = 100 / Object.keys(this.fields).length
+            const percents = 100 / (Object.keys(this.fields).length + 1)
             return `${percents}%`
         }
     }
