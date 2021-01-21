@@ -16,8 +16,7 @@ function login (email, password) {
 }
 
 function logout () {
-    // Delete user from localStorage
-    TokensStorageService.clearTokens();
+    TokensStorageService.clearTokens()
 }
 
 export const AuthService = {

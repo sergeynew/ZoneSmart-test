@@ -1,10 +1,10 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import Router from 'vue-router'
-import OrdersPage from '@/pages/OrdersPage.vue'
-import LoginPage from '@/pages/LoginPage.vue'
-import { TokensStorageService } from '@/services';
+import OrdersPage from '@/components/pages/TheOrdersPage.vue'
+import LoginPage from '@/components/pages/TheLoginPage.vue'
+import { TokensStorageService } from '@/services'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const publicPagesUrls = [
     '/login'
@@ -17,16 +17,14 @@ export const router = new Router({
         { path: '/login', component: LoginPage },
         { path: '*', redirect: '/orders' }
     ]
-});
+})
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if user not logged in.
-    const authRequired = !publicPagesUrls.includes(to.path);
-    const loggedIn = TokensStorageService.getAccessToken();
-
+    const authRequired = !publicPagesUrls.includes(to.path)
+    const loggedIn = TokensStorageService.getAccessToken()
     if (authRequired && !loggedIn) {
-        return next('/login');
+        return next('/login')
     }
-
-    return next();
+    return next()
 })

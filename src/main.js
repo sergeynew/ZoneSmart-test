@@ -15,6 +15,4 @@ const app = new Vue({
     styles,
     render: (h) => h(App)
 })
-console.log('access', localStorage.getItem('access_token'))
-console.log('refresh', localStorage.getItem('refresh_token'))
 export default app

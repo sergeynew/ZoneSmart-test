@@ -7,7 +7,7 @@
 
     .form-control
         height: 50px
-        border: 1px solid $form-border-color
+        border: 1px solid $gray-color
         border-radius: 5px
         font-size: 1rem
         font-weight: 500
@@ -30,3 +30,23 @@
         .form-control:focus,
         .form-control:active
             border-color: $error-red-color
+
+.styled-checkbox
+    display: inline-flex
+    width: 30px
+    height: 30px
+    background: $base-bg-color
+    border-radius: 50%
+    align-items: center
+    justify-content: center
+    &_checked
+        background: $light-green-color
+        &::after
+            content: ""
+            display: block
+            width: 12px
+            height: 6px
+            margin: 0 0 3px 1px
+            border-bottom: 3px solid $white-color
+            border-left: 3px solid $white-color
+            transform: rotate(-45deg)

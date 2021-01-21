@@ -43,7 +43,7 @@ axiosInstance.interceptors.request.use((request) => {
 })
 
 function get (url, params) {
-    return axiosInstance.get(url, params)
+    return axiosInstance.get(url, { params })
 }
 
 function post (url, params) {

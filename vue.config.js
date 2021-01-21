@@ -1,6 +1,6 @@
-const path = require('path');
+const path = require('path')
 
-const vueSrc = './src';
+const vueSrc = './src'
 const stylesLink = './src/assets/sass'
 
 module.exports = {

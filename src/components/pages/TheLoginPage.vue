@@ -43,7 +43,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 
 const ERRORS = {
     loginFailure: 'Пользователь не найден',
@@ -134,5 +134,4 @@ export default {
     &__errors
         color: $error-red-color
         font-weight: 600
-        letter-spacing: 0
 </style>
