@@ -18,7 +18,9 @@
                 )
         .data-table__pagination
             DataTablePagination(
-                :pagination-settings="pagination"
+                :default_pagination="pagination"
+                :total_items="total_items"
+                @paginate="onPaginate"
             )
 </template>
 
@@ -44,6 +46,10 @@ export default {
         table_data: {
             type: Object,
             default: () => {}
+        },
+        total_items: {
+            type: Number,
+            default: () => 0
         }
     },
 
@@ -51,10 +57,14 @@ export default {
         return {
             selected_items_count: null,
             pagination: {
-                from: 0,
-                offset: 10
+                limit: 15,
+                offset: 0
             }
         }
+    },
+
+    mounted () {
+        this.onPaginate(this.pagination)
     },
 
     methods: {
@@ -70,6 +80,12 @@ export default {
                 this.selected_items_count -= 1
             }
             this.$emit('select-item', params)
+        },
+
+        onPaginate ({ limit, offset }) {
+            this.pagination.limit = limit
+            this.pagination.offset = offset
+            this.$emit('paginate', this.pagination)
         }
     },
 

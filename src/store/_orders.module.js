@@ -6,6 +6,7 @@ export const orders = {
     state: {
         orders_list: {},
         selected_orders_list: {},
+        orders_count: 0,
         table_fields: {
             id: {
                 title: 'Номер заказа',
@@ -72,6 +73,7 @@ export const orders = {
             try {
                 const result = await OrdersService.get(params)
                 commit('SET_ORDERS', result.data.results)
+                commit('SET_TOTAL_ORDERS_COUNT', result.data.count)
             } catch (e) {
                 throw Error(e)
             }
@@ -118,6 +120,10 @@ export const orders = {
 
         UNSELECT_ORDER (state, id) {
             delete state.selected_orders_list[id]
+        },
+
+        SET_TOTAL_ORDERS_COUNT (state, count) {
+            state.orders_count = count
         }
     }
 }

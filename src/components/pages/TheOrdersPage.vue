@@ -1,35 +1,29 @@
 <template lang="pug">
     #orders-page
         h3.page-title Таблица заказов
+        .orders-filters
+            PageFilters(
+                @filter="onFilter"
+            )
         .orders-table
             DataTable(
                 :fields="table_fields",
                 :table_data="orders_list"
-                :pagination_settings="pagination"
+                :total_items="orders_count"
                 @select-all="onSelectAll"
                 @select-item="onOrderItemSelect"
+                @paginate="onPaginate"
             )
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import DataTable from '@/components/common/DataTable/DataTable.vue'
+import PageFilters from '@/components/common/PageFilters.vue'
 
 export default {
     components: {
         DataTable
-    },
-    data () {
-        return {
-            pagination: {
-                limit: 15,
-                offset: 0
-            }
-        }
-    },
-
-    created () {
-        this.getOrders()
     },
 
     computed: {
@@ -42,9 +36,8 @@ export default {
     },
 
     methods: {
-        getOrders () {
-            const { offset, limit } = this.pagination
-            this.$store.dispatch('orders/getOrders', { offset, limit })
+        getOrders (params) {
+            this.$store.dispatch('orders/getOrders', params)
         },
 
         onSelectAll (is_select) {
@@ -53,6 +46,14 @@ export default {
 
         onOrderItemSelect (params) {
             this.$store.dispatch('orders/selectUnselectOrderItem', params)
+        },
+
+        onPaginate ({ limit, offset }) {
+            this.getOrders(limit, offset)
+        },
+
+        onFilter (value) {
+            this.getOrders(value)
         }
     }
 }
