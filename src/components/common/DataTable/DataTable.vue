@@ -1,6 +1,11 @@
 <template lang='pug'>
     .data-table
         .data-table__header
+            .header-actions(v-show="selected_items_count > 0")
+                .header-actions__action-item(
+                    v-for="action_name, key in actions"
+                    @click="emitCustomActionEvent(key)"
+                ) {{ action_name }}
             DataTableHeader(
                 :fields="fields",
                 :actions="actions"
@@ -89,6 +94,10 @@ export default {
 
         onPaginate ({ limit, offset }) {
             this.$emit('paginate', { limit, offset })
+        },
+
+        emitCustomActionEvent (action) {
+            this.$emit(action)
         }
     },
 
@@ -116,4 +125,19 @@ export default {
         background: $white-color
         padding: 10px
         border-radius: 10px
+    .header-actions
+        position: relative
+        height: 59px
+        display: flex
+        align-items: center
+        margin: 0 0 -59px 45px
+        background: $white-color
+        border-radius: 10px
+        z-index: 1
+
+        &__action-item
+            margin: 0 10px
+            cursor: pointer
+            font-weight: 700
+            color: $light-green-color
 </style>

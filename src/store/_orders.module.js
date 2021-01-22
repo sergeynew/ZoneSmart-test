@@ -8,7 +8,7 @@ export const orders = {
         selected_orders_list: {},
         request_params: {
             offset: 0,
-            limit: 25,
+            limit: 15,
             search: ''
         },
         orders_count: 0,
@@ -100,6 +100,16 @@ export const orders = {
             } else {
                 commit('UNSELECT_ORDER', id)
             }
+        },
+
+        updateSelectedOrders ({ state }) {
+            const ids = Object.keys(state.selected_orders_list)
+            console.log('ОБНОВЛЯЮ:', ids)
+        },
+
+        deleteSelectedOrders ({ state }) {
+            const ids = Object.keys(state.selected_orders_list)
+            console.log('УДАЛЯЮ:', ids)
         }
     },
 
@@ -110,7 +120,10 @@ export const orders = {
 
         SET_ORDERS (state, orders_data) {
             const orders_objects = orders_data.reduce(
-                (result, item) => Object.assign(result, { [item.order_id]: new OrderModel(item) }),
+                (orders_models, item) => {
+                    const result = { ...orders_models, [item.order_id]: new OrderModel(item) }
+                    return result
+                },
                 {}
             )
             state.orders_list = orders_objects

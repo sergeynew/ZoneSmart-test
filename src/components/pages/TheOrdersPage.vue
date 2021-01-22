@@ -11,9 +11,12 @@
                 :table_data="orders_list"
                 :total_items="orders_count"
                 :default_pagination="request_params"
+                :actions="table_actions"
                 @select-all="onSelectAll"
                 @select-item="onOrderItemSelect"
                 @paginate="onPaginate"
+                @update_orders="onUpdateOrders"
+                @delete_orders="onDeleteOrders"
             )
 </template>
 
@@ -26,6 +29,15 @@ export default {
     components: {
         DataTable,
         PageFilters
+    },
+
+    data () {
+        return {
+            table_actions: {
+                update_orders: 'Обновить',
+                delete_orders: 'Удалить'
+            }
+        }
     },
 
     computed: {
@@ -58,6 +70,14 @@ export default {
         onFilter (value) {
             // when filter implements, refresh pagination
             this.getOrders({ search: value, limit: 25, offset: 0 })
+        },
+
+        onUpdateOrders () {
+            this.$store.dispatch('orders/updateSelectedOrders')
+        },
+
+        onDeleteOrders () {
+            this.$store.dispatch('orders/deleteSelectedOrders')
         }
     }
 }
