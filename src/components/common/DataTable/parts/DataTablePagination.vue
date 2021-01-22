@@ -15,6 +15,7 @@
 <script>
 export default {
     name: 'DataTablePagination',
+
     props: {
         default_pagination: {
             type: Object,
@@ -25,6 +26,7 @@ export default {
             default: () => 0
         }
     },
+
     data () {
         return {
             pagination: {
@@ -74,6 +76,19 @@ export default {
         emitPaginate () {
             this.$emit('paginate', this.pagination)
         }
+    },
+
+    watch: {
+        total_items (total_items) {
+            this.pagination.offset = 0
+            if (this.pagination.limit >= total_items) {
+                this.pagination.next_offset = total_items
+                this.disabled_buttons.next = true
+            } else {
+                this.disabled_buttons.next = false
+                this.pagination.next_offset = this.pagination.limit
+            }
+        }
     }
 }
 </script>
@@ -94,6 +109,8 @@ export default {
         &__prev,
         &__next
             cursor: pointer
+            &.disabled
+                cursor: default
             &:after
                 font-size: 20px
                 font-weight: bold
@@ -105,4 +122,5 @@ export default {
             margin: 0 5px
             text-align: center
             min-width: 110px
+            cursor: default
 </style>

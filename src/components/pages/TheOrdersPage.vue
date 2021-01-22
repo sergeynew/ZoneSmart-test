@@ -3,13 +3,14 @@
         h3.page-title Таблица заказов
         .orders-filters
             PageFilters(
-                @filter="onFilter"
+                @filter-applied="onFilter"
             )
         .orders-table
             DataTable(
                 :fields="table_fields",
                 :table_data="orders_list"
                 :total_items="orders_count"
+                :default_pagination="request_params"
                 @select-all="onSelectAll"
                 @select-item="onOrderItemSelect"
                 @paginate="onPaginate"
@@ -23,7 +24,8 @@ import PageFilters from '@/components/common/PageFilters.vue'
 
 export default {
     components: {
-        DataTable
+        DataTable,
+        PageFilters
     },
 
     computed: {
@@ -31,7 +33,8 @@ export default {
             orders_list: (state) => state.orders.orders_list,
             selected_orders_list: (state) => state.orders.selected_orders_list,
             table_fields: (state) => state.orders.table_fields,
-            orders_count: (state) => state.orders.orders_count
+            orders_count: (state) => state.orders.orders_count,
+            request_params: (state) => state.orders.request_params
         })
     },
 
@@ -48,12 +51,13 @@ export default {
             this.$store.dispatch('orders/selectUnselectOrderItem', params)
         },
 
-        onPaginate ({ limit, offset }) {
-            this.getOrders(limit, offset)
+        onPaginate (params) {
+            this.getOrders(params)
         },
 
         onFilter (value) {
-            this.getOrders(value)
+            // when filter implements, refresh pagination
+            this.getOrders({ search: value, limit: 25, offset: 0 })
         }
     }
 }

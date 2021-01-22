@@ -3,6 +3,7 @@
         .data-table__header
             DataTableHeader(
                 :fields="fields",
+                :actions="actions"
                 :all_selected="is_all_items_selected",
                 @select-all="onSelectAll"
             )
@@ -18,7 +19,7 @@
                 )
         .data-table__pagination
             DataTablePagination(
-                :default_pagination="pagination"
+                :default_pagination="default_pagination"
                 :total_items="total_items"
                 @paginate="onPaginate"
             )
@@ -50,21 +51,25 @@ export default {
         total_items: {
             type: Number,
             default: () => 0
+        },
+        default_pagination: {
+            type: Object,
+            required: true
+        },
+        actions: {
+            type: Object,
+            default: () => {}
         }
     },
 
     data () {
         return {
-            selected_items_count: null,
-            pagination: {
-                limit: 15,
-                offset: 0
-            }
+            selected_items_count: null
         }
     },
 
     mounted () {
-        this.onPaginate(this.pagination)
+        this.onPaginate(this.default_pagination)
     },
 
     methods: {
@@ -83,9 +88,7 @@ export default {
         },
 
         onPaginate ({ limit, offset }) {
-            this.pagination.limit = limit
-            this.pagination.offset = offset
-            this.$emit('paginate', this.pagination)
+            this.$emit('paginate', { limit, offset })
         }
     },
 

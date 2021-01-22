@@ -6,6 +6,11 @@ export const orders = {
     state: {
         orders_list: {},
         selected_orders_list: {},
+        request_params: {
+            offset: 0,
+            limit: 25,
+            search: ''
+        },
         orders_count: 0,
         table_fields: {
             id: {
@@ -69,9 +74,10 @@ export const orders = {
         }
     },
     actions: {
-        async getOrders ({ commit }, params) {
+        async getOrders ({ state, commit }, params) {
             try {
-                const result = await OrdersService.get(params)
+                commit('SET_REQUEST_PARAMS', params)
+                const result = await OrdersService.get(state.request_params)
                 commit('SET_ORDERS', result.data.results)
                 commit('SET_TOTAL_ORDERS_COUNT', result.data.count)
             } catch (e) {
@@ -96,7 +102,11 @@ export const orders = {
             }
         }
     },
+
     mutations: {
+        SET_REQUEST_PARAMS (state, params) {
+            state.request_params = { ...state.request_params, ...params }
+        },
 
         SET_ORDERS (state, orders_data) {
             const orders_objects = orders_data.reduce(
