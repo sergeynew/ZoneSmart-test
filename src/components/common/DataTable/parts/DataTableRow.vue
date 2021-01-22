@@ -93,6 +93,7 @@ export default {
             justify-content: space-between
             align-items: center
             padding: 20px 0
+            text-align: center
         &__row:not(:last-of-type)
             border-bottom: 1px solid $gray-color
         &__cell

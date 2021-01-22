@@ -8,7 +8,7 @@ export const orders = {
         selected_orders_list: {},
         request_params: {
             offset: 0,
-            limit: 15,
+            limit: 10,
             search: ''
         },
         orders_count: 0,
@@ -71,15 +71,21 @@ export const orders = {
                 title: 'Изображение',
                 type: 'text'
             }
+        },
+        status: {
+            loading: true,
+            loaded: false
         }
     },
     actions: {
         async getOrders ({ state, commit }, params) {
             try {
+                commit('SET_LOADING_STATUS')
                 commit('SET_REQUEST_PARAMS', params)
                 const result = await OrdersService.get(state.request_params)
                 commit('SET_ORDERS', result.data.results)
                 commit('SET_TOTAL_ORDERS_COUNT', result.data.count)
+                commit('SET_LOADED_STATUS')
             } catch (e) {
                 throw Error(e)
             }
@@ -130,7 +136,7 @@ export const orders = {
         },
 
         SELECT_ALL (state) {
-            Object.assign(state.selected_orders_list, state.orders_list)
+            state.selected_orders_list = { ...state.orders_list }
         },
 
         UNSELECT_ALL (state) {
@@ -147,6 +153,16 @@ export const orders = {
 
         SET_TOTAL_ORDERS_COUNT (state, count) {
             state.orders_count = count
+        },
+
+        SET_LOADING_STATUS (state) {
+            state.status.loading = true
+            state.status.loaded = false
+        },
+
+        SET_LOADED_STATUS (state) {
+            state.status.loaded = true
+            state.status.loading = false
         }
     }
 }

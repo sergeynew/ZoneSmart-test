@@ -1,36 +1,40 @@
 <template lang='pug'>
     .data-table
-        .data-table__header
-            .header-actions(v-show="selected_items_count > 0")
-                .header-actions__action-item(
-                    v-for="action_name, key in actions"
-                    @click="emitCustomActionEvent(key)"
-                ) {{ action_name }}
-            DataTableHeader(
-                :fields="fields",
-                :actions="actions"
-                :all_selected="is_all_items_selected",
-                @select-all="onSelectAll"
-            )
-        .data-table__body
-                DataTableRow(
-                    v-for="row_data, id of table_data"
-                    :key="id"
+        .data-table__loader(v-show="is_loading")
+            SpinnerLoader
+        .data-table__content(v-show="!is_loading")
+            .data-table__header
+                .header-actions(v-show="selected_items_count > 0")
+                    .header-actions__action-item(
+                        v-for="action_name, key in actions"
+                        @click="emitCustomActionEvent(key)"
+                    ) {{ action_name }}
+                DataTableHeader(
                     :fields="fields",
-                    :row_data="row_data",
+                    :actions="actions"
                     :all_selected="is_all_items_selected",
-                    :all_unselected="is_all_items_unselected"
-                    @select-item="onSelectItem"
+                    @select-all="onSelectAll"
                 )
-        .data-table__pagination
-            DataTablePagination(
-                :default_pagination="default_pagination"
-                :total_items="total_items"
-                @paginate="onPaginate"
-            )
+            .data-table__body
+                    DataTableRow(
+                        v-for="row_data, id of table_data"
+                        :key="id"
+                        :fields="fields",
+                        :row_data="row_data",
+                        :all_selected="is_all_items_selected",
+                        :all_unselected="is_all_items_unselected"
+                        @select-item="onSelectItem"
+                    )
+            .data-table__pagination
+                DataTablePagination(
+                    :default_pagination="default_pagination"
+                    :total_items="total_items"
+                    @paginate="onPaginate"
+                )
 </template>
 
 <script>
+import SpinnerLoader from '@/components/common/SpinnerLoader.vue'
 import DataTableHeader from './parts/DataTableHeader.vue'
 import DataTableRow from './parts/DataTableRow.vue'
 import DataTablePagination from './parts/DataTablePagination.vue'
@@ -41,7 +45,8 @@ export default {
     components: {
         DataTableHeader,
         DataTableRow,
-        DataTablePagination
+        DataTablePagination,
+        SpinnerLoader
     },
 
     props: {
@@ -64,6 +69,10 @@ export default {
         actions: {
             type: Object,
             default: () => {}
+        },
+        is_loading: {
+            type: Boolean,
+            default: () => false
         }
     },
 
@@ -94,6 +103,7 @@ export default {
 
         onPaginate ({ limit, offset }) {
             this.$emit('paginate', { limit, offset })
+            this.onSelectAll(false)
         },
 
         emitCustomActionEvent (action) {
@@ -119,6 +129,13 @@ export default {
 
 <style lang='sass'>
 .data-table
+    &__loader
+        min-height: 860px
+        display: flex
+        align-items: center
+        justify-content: center
+    &__content
+        min-height: 860px
     &__body
         display: flex
         flex-direction: column

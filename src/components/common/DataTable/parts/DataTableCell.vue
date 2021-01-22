@@ -1,5 +1,5 @@
 <template lang='pug'>
-    .data-item
+    .data-table__cell
         component(
             :is="cell_component_name"
             :data="data"
@@ -35,12 +35,3 @@ export default {
     }
 }
 </script>
-
-<style lang='sass' scoped>
-    .table-row
-        display: flex
-        flex-direction: column
-        .data-row
-            display: flex
-            justify-content: space-between
-</style>

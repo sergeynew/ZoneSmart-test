@@ -81,6 +81,7 @@ export default {
     watch: {
         total_items (total_items) {
             this.pagination.offset = 0
+            this.pagination.next_offset = this.pagination.limit
             if (this.pagination.limit >= total_items) {
                 this.pagination.next_offset = total_items
                 this.disabled_buttons.next = true

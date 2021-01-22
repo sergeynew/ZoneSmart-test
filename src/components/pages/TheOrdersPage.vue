@@ -12,6 +12,7 @@
                 :total_items="orders_count"
                 :default_pagination="request_params"
                 :actions="table_actions"
+                :is_loading="is_loading"
                 @select-all="onSelectAll"
                 @select-item="onOrderItemSelect"
                 @paginate="onPaginate"
@@ -46,7 +47,8 @@ export default {
             selected_orders_list: (state) => state.orders.selected_orders_list,
             table_fields: (state) => state.orders.table_fields,
             orders_count: (state) => state.orders.orders_count,
-            request_params: (state) => state.orders.request_params
+            request_params: (state) => state.orders.request_params,
+            is_loading: (state) => state.orders.status.loading
         })
     },
 
@@ -68,8 +70,11 @@ export default {
         },
 
         onFilter (value) {
-            // when filter implements, refresh pagination
-            this.getOrders({ search: value, limit: 25, offset: 0 })
+            // when filter implements
+            // unselect all orders
+            this.onSelectAll(false)
+            // and refresh pagination
+            this.getOrders({ search: value, offset: 0 })
         },
 
         onUpdateOrders () {
