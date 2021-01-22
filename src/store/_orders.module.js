@@ -4,15 +4,14 @@ import OrderModel from '@/models/OrderModel'
 export const orders = {
     namespaced: true,
     state: {
-        ordersList: {},
-        selectedOrdersList: {},
-        allOrdersSelectedFlag: false,
-        tableFields: {
+        orders_list: {},
+        selected_orders_list: {},
+        table_fields: {
             id: {
                 title: 'Номер заказа',
                 type: 'text'
             },
-            createDate: {
+            create_date: {
                 title: 'Дата создания',
                 type: 'datetime'
             },
@@ -20,15 +19,15 @@ export const orders = {
                 title: 'Статус',
                 type: 'text'
             },
-            isPaid: {
+            is_paid: {
                 title: 'Оплачен',
                 type: 'checked'
             },
-            isShipped: {
+            is_shipped: {
                 title: 'Отправлен',
                 type: 'checked'
             },
-            isCompleted: {
+            is_completed: {
                 title: 'Доставлен',
                 type: 'checked'
             },
@@ -36,16 +35,16 @@ export const orders = {
                 title: 'Заказчик',
                 type: 'text'
             },
-            shippingMethod: {
+            shipping_method: {
                 title: 'Метод доставки',
                 type: 'text'
             },
-            totalPrice: {
+            total_price: {
                 title: 'Итоговая цена',
                 type: 'price'
             }
         },
-        subFields: {
+        sub_fields: {
             sku: {
                 title: 'SKU',
                 type: 'text'
@@ -58,7 +57,7 @@ export const orders = {
                 title: 'Количество',
                 type: 'text'
             },
-            totalPrice: {
+            total_price: {
                 title: 'Цена',
                 type: 'price'
             },
@@ -78,8 +77,8 @@ export const orders = {
             }
         },
 
-        selectUnselectAllOrders ({ commit }, isSelect) {
-            if (isSelect) {
+        selectUnselectAllOrders ({ commit }, is_select) {
+            if (is_select) {
                 commit('SELECT_ALL')
             } else {
                 commit('UNSELECT_ALL')
@@ -97,34 +96,28 @@ export const orders = {
     },
     mutations: {
 
-        SET_ORDERS (state, ordersData) {
-            const ordersObjects = ordersData.reduce(
+        SET_ORDERS (state, orders_data) {
+            const orders_objects = orders_data.reduce(
                 (result, item) => Object.assign(result, { [item.order_id]: new OrderModel(item) }),
                 {}
             )
-            state.ordersList = ordersObjects
+            state.orders_list = orders_objects
         },
 
         SELECT_ALL (state) {
-            state.allOrdersSelectedFlag = true
-            Object.assign(state.selectedOrdersList, state.ordersList)
+            Object.assign(state.selected_orders_list, state.orders_list)
         },
 
         UNSELECT_ALL (state) {
-            state.allOrdersSelectedFlag = false
-            state.selectedOrdersList = {}
+            state.selected_orders_list = {}
         },
 
         SELECT_ORDER (state, id) {
-            Object.assign(state.selectedOrdersList, { [id]: state.ordersList[id] })
-            const ordersLength = Object.keys(state.ordersList).length
-            const selectedLength = Object.keys(state.selectedOrdersList).length
-            state.allOrdersSelectedFlag = ordersLength === selectedLength
+            Object.assign(state.selected_orders_list, { [id]: state.orders_list[id] })
         },
 
         UNSELECT_ORDER (state, id) {
-            state.allOrdersSelectedFlag = false
-            delete state.selectedOrdersList[id]
+            delete state.selected_orders_list[id]
         }
     }
 }

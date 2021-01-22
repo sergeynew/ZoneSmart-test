@@ -11,8 +11,8 @@ function setTokens (tokens) {
     localStorage.setItem('refresh_token', tokens.refresh)
 }
 
-function setAccessToken (accessToken) {
-    localStorage.setItem('access_token', accessToken)
+function setAccessToken (access_token) {
+    localStorage.setItem('access_token', access_token)
 }
 
 function getAccessToken () {

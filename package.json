@@ -51,6 +51,7 @@
             "parser": "babel-eslint"
         },
         "rules": {
+            "camelcase": "off",
             "import/prefer-default-export": "off",
             "semi": "off",
             "indent": [

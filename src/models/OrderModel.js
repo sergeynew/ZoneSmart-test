@@ -1,35 +1,35 @@
 
 class OrderModel {
     id
-    createDate
+    create_date
     status
-    isPaid
-    isShipped
-    isCompleted
+    is_paid
+    is_shipped
+    is_completed
     status
     buyer
-    shippingMethod
-    totalPrice
-    partialItems
+    shipping_method
+    total_price
+    items
 
     constructor (params) {
         this.id = params.order_id
-        this.createDate = params.create_date
-        this.isPaid = params.is_paid
-        this.isShipped = params.is_shipped
-        this.isCompleted = params.is_completed
+        this.create_date = params.create_date
+        this.is_paid = params.is_paid
+        this.is_shipped = params.is_shipped
+        this.is_completed = params.is_completed
         this.buyer = params.buyer
-        this.shippingMethod = 'Почта России' // Just dummy. Didn't find this in API
-        this.totalPrice = params.total_price
-        this.partialItems = params.items
+        this.shipping_method = 'Почта России' // Just dummy. Didn't find this in API
+        this.total_price = params.total_price
+        this.items = params.items
         this.status = this.getStatus()
     }
 
     getStatus () {
         // Just dummy with part of params.
-        let status = this.isPaid ? 'Оплачен' : 'В ожидании оплаты'
-        status = this.isShipped ? 'Отправлен' : status
-        status = this.isCompleted ? 'Завершен' : status
+        let status = this.is_paid ? 'Оплачен' : 'В ожидании оплаты'
+        status = this.is_shipped ? 'Отправлен' : status
+        status = this.is_completed ? 'Завершен' : status
         return status
     }
 }

@@ -1,32 +1,39 @@
 <template lang='pug'>
-    .data-table-component
-        DataTableHeader(
-            :fields="fields",
-            :allItemsSelected="isAllItemsSelected"
-            @select-all="onSelectAll",
-        )
-        .table-body
+    .data-table
+        .data-table__header
+            DataTableHeader(
+                :fields="fields",
+                :all_selected="is_all_items_selected",
+                @select-all="onSelectAll"
+            )
+        .data-table__body
                 DataTableRow(
-                    v-for="rowData, id of tableData"
+                    v-for="row_data, id of table_data"
                     :key="id"
                     :fields="fields",
-                    :rowData="rowData",
-                    :allSelected="isAllItemsSelected",
-                    :allUnselected="allUnselected"
+                    :row_data="row_data",
+                    :all_selected="is_all_items_selected",
+                    :all_unselected="is_all_items_unselected"
                     @select-item="onSelectItem"
                 )
+        .data-table__pagination
+            DataTablePagination(
+                :pagination-settings="pagination"
+            )
 </template>
 
 <script>
 import DataTableHeader from './parts/DataTableHeader.vue'
 import DataTableRow from './parts/DataTableRow.vue'
+import DataTablePagination from './parts/DataTablePagination.vue'
 
 export default {
     name: 'DataTable',
 
     components: {
         DataTableHeader,
-        DataTableRow
+        DataTableRow,
+        DataTablePagination
     },
 
     props: {
@@ -34,7 +41,7 @@ export default {
             type: Object,
             default: () => {}
         },
-        tableData: {
+        table_data: {
             type: Object,
             default: () => {}
         }
@@ -42,44 +49,49 @@ export default {
 
     data () {
         return {
-            selectedItemsCount: null
+            selected_items_count: null,
+            pagination: {
+                from: 0,
+                offset: 10
+            }
         }
     },
 
     methods: {
-        onSelectAll (isSelected) {
-            this.selectedItemsCount = isSelected ? this.itemsCount : 0
-            this.$emit('select-all', isSelected)
+        onSelectAll (is_selected) {
+            this.selected_items_count = is_selected ? this.items_count : 0
+            this.$emit('select-all', is_selected)
         },
 
         onSelectItem (params) {
             if (params.flag) {
-                this.selectedItemsCount += 1
+                this.selected_items_count += 1
             } else {
-                this.selectedItemsCount -= 1
+                this.selected_items_count -= 1
             }
             this.$emit('select-item', params)
         }
     },
 
     computed: {
-        itemsCount () {
-            return Object.keys(this.tableData).length
+        items_count () {
+            return Object.keys(this.table_data).length
         },
 
-        allUnselected () {
-            return this.selectedItemsCount === 0
+        is_all_items_unselected () {
+            return this.selected_items_count === 0
         },
 
-        isAllItemsSelected () {
-            return this.selectedItemsCount === this.itemsCount
+        is_all_items_selected () {
+            return this.selected_items_count === this.items_count
         }
     }
 }
 </script>
 
 <style lang='sass'>
-    .table-body
+.data-table
+    &__body
         display: flex
         flex-direction: column
         background: $white-color

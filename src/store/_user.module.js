@@ -2,7 +2,7 @@ import { AuthService, TokensStorageService } from '@/services'
 import { router } from '@/router'
 
 const initialState = TokensStorageService.getAccessToken()
-    ? { status: { loggedIn: true }, user: '' }
+    ? { status: { logged_in: true }, user: '' }
     : { status: {}, user: null }
 
 export const user = {
@@ -31,18 +31,18 @@ export const user = {
     },
 
     mutations: {
-        LOGIN_REQUEST (state, userName) {
-            state.status = { loggingIn: true }
-            state.user = userName
+        LOGIN_REQUEST (state, user_name) {
+            state.status = { logged_in: true }
+            state.user = user_name
         },
 
-        LOGIN_SUCCESS (state, userName) {
-            state.status = { loggedIn: true }
-            state.user = userName
+        LOGIN_SUCCESS (state, user_name) {
+            state.status = { logged_in: true }
+            state.user = user_name
         },
 
         LOGIN_FAILURE (state) {
-            state.status = { loginFailure: true }
+            state.status = { login_failure: true }
             state.user = null
         },
 

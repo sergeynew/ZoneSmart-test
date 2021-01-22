@@ -24,15 +24,15 @@
                     placeholder="Пароль"
                 )
                 i.icon.form-input__icon(
-                    :class="showPassword ? 'hide-icon' : 'show-icon'"
+                    :class="show_password ? 'hide-icon' : 'show-icon'"
                     @click="togglePasswordVisibility"
                 )
             .login-form__errors(
-                v-if="errors.credentialsRequired"
-            ) {{ errorsText.credentialsRequired }}
+                v-if="errors.credentials_required"
+            ) {{ errors_text.credentials_required }}
             .login-form__errors(
-                v-else-if="loginStatus.loginFailure"
-            ) {{ errorsText.loginFailure }}
+                v-else-if="login_status.login_failure"
+            ) {{ errors_text.login_failure }}
             .login-form__submit
                 button.btn.btn_green.uppercase(
                     type="submit"
@@ -46,8 +46,8 @@ import { required, email } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 
 const ERRORS = {
-    loginFailure: 'Пользователь не найден',
-    credentialsRequired: 'Пожалуйста введите e-mail / пароль'
+    login_failure: 'Пользователь не найден',
+    credentials_required: 'Пожалуйста введите e-mail / пароль'
 }
 
 export default {
@@ -58,9 +58,9 @@ export default {
             email: '',
             password: '',
             errors: {},
-            isSumbitted: false,
-            showPassword: false,
-            errorsText: ERRORS
+            is_sumbitted: false,
+            show_password: false,
+            errors_text: ERRORS
         }
     },
 
@@ -83,7 +83,7 @@ export default {
         onSubmit () {
             this.$v.$touch()
             if (this.$v.$invalid) {
-                this.errors = { credentialsRequired: true }
+                this.errors = { credentials_required: true }
             } else {
                 this.errors = {}
                 this.submitted = true
@@ -95,14 +95,14 @@ export default {
 
         togglePasswordVisibility () {
             const input = document.getElementById('password-field')
-            this.showPassword = !this.showPassword
-            input.type = this.showPassword ? 'text' : 'password'
+            this.show_password = !this.show_password
+            input.type = this.show_password ? 'text' : 'password'
         }
     },
 
     computed: {
         ...mapState({
-            loginStatus: (state) => state.user.status
+            login_status: (state) => state.user.status
         })
     }
 }

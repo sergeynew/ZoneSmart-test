@@ -2,7 +2,6 @@
     #app
         .container
             <router-view></router-view>
-        .example
 </template>
 
 <script>

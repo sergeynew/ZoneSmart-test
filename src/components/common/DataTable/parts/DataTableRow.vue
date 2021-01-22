@@ -1,18 +1,17 @@
 <template lang='pug'>
-    .table-body__row
-        .table-body__item
+    .data-table__row
+        .data-table__cell
             input.select-item(
                 type="checkbox",
-                v-model="rowSelected"
+                v-model="row_selected"
                 @click="onItemSelect($event)"
             )
-        DataTableCell.table-body__item(
-            v-for="fieldValue, key in fields"
-            v-if="!Array.isArray(rowData[key])"
+        DataTableCell.table-body__cell(
+            v-for="field_value, key in fields"
             :key="`${key}`"
-            :data="rowData[key]"
-            :fieldType="fieldValue.type"
-            :style="{width: ceilDefaultWidth}"
+            :data="row_data[key]"
+            :field_type="field_value.type"
+            :style="{width: cell_default_widht}"
         )
 </template>
 
@@ -21,26 +20,28 @@
 import DataTableCell from './DataTableCell.vue'
 
 export default {
-    name: 'DataTableBody',
+    name: 'DataTableRow',
+
     components: {
         DataTableCell
     },
+
     props: {
         fields: {
             type: Object,
             required: true,
             default: () => {}
         },
-        rowData: {
+        row_data: {
             type: Object,
             required: true,
             default: () => {}
         },
-        allSelected: {
+        all_selected: {
             type: Boolean,
             default: () => false
         },
-        allUnselected: {
+        all_unselected: {
             type: Boolean,
             default: () => true
         }
@@ -48,12 +49,12 @@ export default {
 
     data () {
         return {
-            rowSelected: false
+            row_selected: false
         }
     },
 
     computed: {
-        ceilDefaultWidth () {
+        cell_default_widht () {
             const percents = 100 / (Object.keys(this.fields).length + 1)
             return `${percents}%`
         }
@@ -61,24 +62,24 @@ export default {
 
     methods: {
         onItemSelect ($event) {
-            if (!this.rowData.id) {
+            if (!this.row_data.id) {
                 throw Error('row data must have "id" parametr')
             }
             const flag = $event.target.checked
-            this.$emit('select-item', { flag, id: this.rowData.id })
+            this.$emit('select-item', { flag, id: this.row_data.id })
         }
     },
 
     watch: {
-        allSelected (value) {
-            if (!this.rowSelected && value) {
-                this.rowSelected = true
+        all_selected (value) {
+            if (!this.row_selected && value) {
+                this.row_selected = true
             }
         },
 
-        allUnselected (value) {
-            if (this.rowSelected && value) {
-                this.rowSelected = false
+        all_unselected (value) {
+            if (this.row_selected && value) {
+                this.row_selected = false
             }
         }
     }
@@ -86,7 +87,7 @@ export default {
 </script>
 
 <style lang='sass' scoped>
-    .table-body
+    .data-table
         &__row
             display: flex
             justify-content: space-between
@@ -94,6 +95,6 @@ export default {
             padding: 20px 0
         &__row:not(:last-of-type)
             border-bottom: 1px solid $gray-color
-        &__item
+        &__cell
             text-align: center
 </style>

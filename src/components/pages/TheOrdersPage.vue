@@ -3,9 +3,9 @@
         h3.page-title Таблица заказов
         .orders-table
             DataTable(
-                :fields="tableFields",
-                :tableData="ordersList"
-                :settings="pagination"
+                :fields="table_fields",
+                :table_data="orders_list"
+                :pagination_settings="pagination"
                 @select-all="onSelectAll"
                 @select-item="onOrderItemSelect"
             )
@@ -20,10 +20,9 @@ export default {
         DataTable
     },
     data () {
-        // offset and limit as local here
         return {
             pagination: {
-                limit: 5,
+                limit: 15,
                 offset: 0
             }
         }
@@ -35,9 +34,10 @@ export default {
 
     computed: {
         ...mapState({
-            ordersList: (state) => state.orders.ordersList,
-            selectedOrdersList: (state) => state.orders.selectedOrdersList,
-            tableFields: (state) => state.orders.tableFields
+            orders_list: (state) => state.orders.orders_list,
+            selected_orders_list: (state) => state.orders.selected_orders_list,
+            table_fields: (state) => state.orders.table_fields,
+            orders_count: (state) => state.orders.orders_count
         })
     },
 
@@ -47,8 +47,8 @@ export default {
             this.$store.dispatch('orders/getOrders', { offset, limit })
         },
 
-        onSelectAll (isSelect) {
-            this.$store.dispatch('orders/selectUnselectAllOrders', isSelect)
+        onSelectAll (is_select) {
+            this.$store.dispatch('orders/selectUnselectAllOrders', is_select)
         },
 
         onOrderItemSelect (params) {

@@ -3,14 +3,14 @@
         .table-header__item
             input.mass-select(
                 type="checkbox",
-                :checked="allItemsSelected",
+                :checked="all_selected",
                 @click="onSelectAll($event)"
             )
         .table-header__item.data-item(
-            v-for="fieldValue, key in fields"
-            v-if="!Array.isArray(fieldValue)"
-            :style="{ width: ceilDefaultWidth }"
-        ) {{ fieldValue.title }}
+            v-for="field_value, key in fields"
+            v-if="!Array.isArray(field_value)"
+            :style="{ width: cell_default_width }"
+        ) {{ field_value.title }}
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
             required: true,
             default: () => {}
         },
-        allItemsSelected: {
+        all_selected: {
             type: Boolean,
             default: () => false
         }
@@ -35,7 +35,7 @@ export default {
     },
 
     computed: {
-        ceilDefaultWidth () {
+        cell_default_width () {
             const percents = 100 / (Object.keys(this.fields).length + 1)
             return `${percents}%`
         }

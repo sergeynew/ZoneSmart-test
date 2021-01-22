@@ -1,7 +1,7 @@
 <template lang='pug'>
     .data-item
         component(
-            :is="cellComponentName"
+            :is="cell_component_name"
             :data="data"
         )
 </template>
@@ -22,15 +22,15 @@ export default {
 
     props: {
         data: {},
-        fieldType: {
+        field_type: {
             type: String,
             default: () => ''
         }
     },
 
     computed: {
-        cellComponentName () {
-            return `${this.fieldType}Item`
+        cell_component_name () {
+            return `${this.field_type}Item`
         }
     }
 }

@@ -1,9 +1,9 @@
 import { TokensStorageService } from './tokens_storage.service'
 
 export const authHeader = () => {
-    const accessToken = TokensStorageService.getAccessToken()
-    if (accessToken) {
-        return { Authorization: `JWT ${accessToken}` }
+    const access_token = TokensStorageService.getAccessToken()
+    if (access_token) {
+        return { Authorization: `JWT ${access_token}` }
     }
     return {}
 }

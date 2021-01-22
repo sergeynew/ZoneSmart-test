@@ -15,18 +15,18 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-        const originalRequest = error.config
-        if (originalRequest.url !== JWT_CREATE_URL) {
-            if (error.response.status === 401 && !originalRequest._retry) {
-                originalRequest._retry = true
-                const refreshToken = TokensStorageService.getRefreshToken()
-                if (!refreshToken) return Promise.reject(error)
-                return post(JWT_REFRESH_URL, { refresh: refreshToken })
-                    .then((tokenResponse) => {
-                        if (tokenResponse.status === 200) {
-                            TokensStorageService.setAccessToken(tokenResponse.data.access)
-                            Object.assign(originalRequest.headers, authHeader())
-                            return axiosInstance(originalRequest)
+        const original_request = error.config
+        if (original_request.url !== JWT_CREATE_URL) {
+            if (error.response.status === 401 && !original_request._retry) {
+                original_request._retry = true
+                const refresh_token = TokensStorageService.getRefreshToken()
+                if (!refresh_token) return Promise.reject(error)
+                return post(JWT_REFRESH_URL, { refresh: refresh_token })
+                    .then((token_response) => {
+                        if (token_response.status === 200) {
+                            TokensStorageService.setAccessToken(token_response.data.access)
+                            Object.assign(original_request.headers, authHeader())
+                            return axiosInstance(original_request)
                         }
                         return Promise.reject(error)
                     })

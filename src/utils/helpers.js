@@ -3,8 +3,8 @@ function capitalize (s) {
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-function dateToLocaleString (dateTimeString, locale = 'ru-RU') {
-    const date = new Date(dateTimeString)
+function dateToLocaleString (date_time_string, locale = 'ru-RU') {
+    const date = new Date(date_time_string)
     return date.toLocaleDateString(locale)
 }
 
