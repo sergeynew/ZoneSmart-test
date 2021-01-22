@@ -1,36 +1,38 @@
 <template lang='pug'>
     .data-table
-        .data-table__loader(v-show="is_loading")
-            SpinnerLoader
-        .data-table__content(v-show="!is_loading")
-            .data-table__header
-                .header-actions(v-show="selected_items_count > 0")
-                    .header-actions__action-item(
-                        v-for="action_name, key in actions"
-                        @click="emitCustomActionEvent(key)"
-                    ) {{ action_name }}
-                DataTableHeader(
-                    :fields="fields",
-                    :actions="actions"
-                    :all_selected="is_all_items_selected",
-                    @select-all="onSelectAll"
-                )
-            .data-table__body
-                    DataTableRow(
-                        v-for="row_data, id of table_data"
-                        :key="id"
+        transition(name="fade")
+            .data-table__loader(v-show="is_loading")
+                SpinnerLoader
+        transition(name="fade")
+            .data-table__content(v-show="!is_loading")
+                .data-table__header
+                    .header-actions(v-show="selected_items_count > 0")
+                        .header-actions__action-item(
+                            v-for="action_name, key in actions"
+                            @click="emitCustomActionEvent(key)"
+                        ) {{ action_name }}
+                    DataTableHeader(
                         :fields="fields",
-                        :row_data="row_data",
+                        :actions="actions"
                         :all_selected="is_all_items_selected",
-                        :all_unselected="is_all_items_unselected"
-                        @select-item="onSelectItem"
+                        @select-all="onSelectAll"
                     )
-            .data-table__pagination
-                DataTablePagination(
-                    :default_pagination="default_pagination"
-                    :total_items="total_items"
-                    @paginate="onPaginate"
-                )
+                .data-table__body
+                        DataTableRow(
+                            v-for="row_data, id of table_data"
+                            :key="id"
+                            :fields="fields",
+                            :row_data="row_data",
+                            :all_selected="is_all_items_selected",
+                            :all_unselected="is_all_items_unselected"
+                            @select-item="onSelectItem"
+                        )
+                .data-table__pagination
+                    DataTablePagination(
+                        :default_pagination="default_pagination"
+                        :total_items="total_items"
+                        @paginate="onPaginate"
+                    )
 </template>
 
 <script>
@@ -129,13 +131,20 @@ export default {
 
 <style lang='sass'>
 .data-table
+    position: relative
     &__loader
-        min-height: 860px
+        position: absolute
+        width: 100%
+        min-height: 825px
         display: flex
         align-items: center
         justify-content: center
+        background: $white-color
+        border-radius: 10px
+        z-index: 1
+
     &__content
-        min-height: 860px
+        min-height: 825px
     &__body
         display: flex
         flex-direction: column

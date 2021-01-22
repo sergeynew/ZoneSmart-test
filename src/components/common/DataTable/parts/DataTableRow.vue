@@ -92,6 +92,7 @@ export default {
             display: flex
             justify-content: space-between
             align-items: center
+            max-height: 75px
             padding: 20px 0
             text-align: center
         &__row:not(:last-of-type)

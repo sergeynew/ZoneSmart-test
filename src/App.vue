@@ -1,7 +1,8 @@
 <template lang="pug">
     #app
         .container
-            <router-view></router-view>
+            transition(name="fade" mode="out-in")
+                routerView
 </template>
 
 <script>
