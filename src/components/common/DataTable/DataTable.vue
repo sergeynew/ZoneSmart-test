@@ -6,11 +6,12 @@
         transition(name="fade")
             .data-table__content(v-show="!is_loading")
                 .data-table__header
-                    .header-actions(v-show="selected_items_count > 0")
-                        .header-actions__action-item(
-                            v-for="action_name, key in actions"
-                            @click="emitCustomActionEvent(key)"
-                        ) {{ action_name }}
+                    transition(name="fade")
+                        .header-actions(v-show="selected_items_count > 0")
+                            .header-actions__action-item(
+                                v-for="action_name, key in actions"
+                                @click="emitCustomActionEvent(key)"
+                            ) {{ action_name }}
                     DataTableHeader(
                         :fields="fields",
                         :actions="actions"
@@ -153,10 +154,10 @@ export default {
         border-radius: 10px
     .header-actions
         position: relative
-        height: 59px
+        height: 65px
         display: flex
         align-items: center
-        margin: 0 0 -59px 45px
+        margin: 0 0 -65px 45px
         background: $white-color
         border-radius: 10px
         z-index: 1

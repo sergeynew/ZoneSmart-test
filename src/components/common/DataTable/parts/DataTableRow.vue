@@ -1,9 +1,11 @@
 <template lang='pug'>
     .data-table__row
         .data-table__cell
-            input.select-item(
+            input.styled-checkbox.styled-checkbox_default(
                 type="checkbox",
                 v-model="row_selected"
+                :checked="all_selected",
+                :class="{ 'checked': row_selected }"
                 @click="onItemSelect($event)"
             )
         DataTableCell.table-body__cell(
@@ -98,5 +100,7 @@ export default {
         &__row:not(:last-of-type)
             border-bottom: 1px solid $gray-color
         &__cell
-            text-align: center
+            display: flex
+            align-items: center
+            justify-content: center
 </style>

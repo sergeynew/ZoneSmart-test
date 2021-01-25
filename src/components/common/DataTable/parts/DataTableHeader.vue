@@ -1,9 +1,10 @@
 <template lang='pug'>
     .table-header
         .table-header__item
-            input.mass-select(
+            input.mass-select.styled-checkbox.styled-checkbox_default(
                 type="checkbox",
                 :checked="all_selected",
+                :class="{ 'checked': all_selected }"
                 @click="onSelectAll($event)"
             )
         .table-header__item.data-item(
@@ -47,12 +48,14 @@ export default {
 .table-header
     display: flex
     justify-content: space-between
+    min-height: 65px
     padding: 20px 10px
     margin: 0 0 20px 0
     background: $white-color
     border-radius: 10px
     color: $gray-color
     &__item
-        text-align: center
-        vertical-align: center
+        display: flex
+        align-items: center
+        justify-content: center
 </style>

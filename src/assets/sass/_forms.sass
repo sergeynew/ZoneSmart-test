@@ -33,20 +33,40 @@
 
 .styled-checkbox
     display: inline-flex
-    width: 30px
-    height: 30px
-    background: $base-bg-color
-    border-radius: 50%
+    background: $white-color
     align-items: center
     justify-content: center
-    &_checked
-        background: $light-green-color
-        &::after
-            content: ""
-            display: block
+    appearance: none
+    outline: none
+    box-shadow: none
+    transition: all .3s
+
+    &_default
+        border: 1px solid $gray-color
+        border-radius: 3px
+        width: 18px
+        height: 18px
+        &.checked::after
+            width: 9px
+            height: 4px
+            margin: 0 0 2px 0
+            border-bottom: 2px solid $white-color
+            border-left: 2px solid $white-color
+
+    &_rounded
+        border-radius: 50%
+        width: 30px
+        height: 30px
+        &.checked::after
             width: 12px
             height: 6px
             margin: 0 0 3px 1px
             border-bottom: 3px solid $white-color
             border-left: 3px solid $white-color
+    &.checked
+        background: $light-green-color
+        border-color: $light-green-color
+        &::after
+            content: ""
+            display: block
             transform: rotate(-45deg)

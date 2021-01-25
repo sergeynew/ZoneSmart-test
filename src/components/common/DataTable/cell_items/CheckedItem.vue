@@ -1,6 +1,6 @@
 <template lang="pug">
-    .styled-checkbox(
-        :class="{ 'styled-checkbox_checked': data }"
+    .styled-checkbox.styled-checkbox_rounded(
+        :class="{ 'checked': data }"
     )
 </template>
 
