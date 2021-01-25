@@ -1,3 +1,5 @@
+
+// Fade
 .fade-enter-active, 
 .fade-leave-active 
   transition: opacity .3s
@@ -5,3 +7,18 @@
 .fade-enter, 
 .fade-leave-to
   opacity: 0
+
+// Dropdown
+
+.dropdown-enter-active
+  animation: dropdown .2s
+
+.dropdown-leave-active
+  animation: dropdown .2s reverse
+
+@keyframes dropdown
+  from
+    transform: scaley(0) translate3d(0, -100%, 0)
+    height: 0
+  to
+    transform: scaley(1) translate3d(0, 0, 0)

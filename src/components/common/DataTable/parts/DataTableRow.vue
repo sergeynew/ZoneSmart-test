@@ -16,7 +16,7 @@
             :style="{ width: cell_default_widht }"
             @toggle-dropdown-row="toggleDropdownContent"
         )
-        transition(name="fade")
+        transition(name="dropdown")
             DataTableDropdownContent(
                 v-if="is_dropdow_shown"
                 :fields="dropdown_fields"

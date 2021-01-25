@@ -4,8 +4,10 @@
             .data-table__loader(v-show="is_loading")
                 SpinnerLoader
         transition(name="fade")
-            .data-table__content(v-show="!is_loading")
-                .data-table__header
+            .data-table__content(
+                v-show="!is_loading"
+            )
+                .data-table__header(v-if="total_items")
                     transition(name="fade")
                         .header-actions(v-show="selected_items_count > 0")
                             .header-actions__action-item(
@@ -18,7 +20,7 @@
                         :all_selected="is_all_items_selected",
                         @select-all="onSelectAll"
                     )
-                .data-table__body
+                .data-table__body(v-if="total_items")
                         DataTableRow(
                             v-for="row_data, id of table_data"
                             :key="id"
@@ -29,13 +31,14 @@
                             :all_unselected="is_all_items_unselected"
                             @select-item="onSelectItem"
                         )
-                .data-table__pagination
+                .data-table__pagination(v-if="total_items")
                     DataTablePagination(
                         :default_pagination="default_pagination"
                         :total_items="total_items"
                         :is_loading="is_loading"
                         @paginate="onPaginate"
                     )
+                .data-table__no-found(v-else) Заказов не найдено
 </template>
 
 <script>
@@ -173,4 +176,7 @@ export default {
             cursor: pointer
             font-weight: 700
             color: $light-green-color
+    &__no-found
+        margin: 40px 0
+        text-align: center
 </style>

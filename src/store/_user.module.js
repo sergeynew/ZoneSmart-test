@@ -19,7 +19,8 @@ export const user = {
                         router.push('/')
                     },
                     (error) => {
-                        commit('LOGIN_FAILURE', error)
+                        console.error(error)
+                        commit('LOGIN_FAILURE')
                     }
                 )
         },

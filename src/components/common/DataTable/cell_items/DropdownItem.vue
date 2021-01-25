@@ -2,7 +2,13 @@
     .dropdown-item(
         @click="toggleDropdown"
         :class=" { 'has-content': data.length }"
-    ) + {{ cell_title }}
+    )
+        span.sign(
+            v-if="is_opened"
+            v-html="'&#8593;'"
+        )
+        span.sign(v-else) +
+        |  {{ cell_title }}
 </template>
 
 <script>
@@ -13,6 +19,12 @@ export default {
         data: {
             type: Array,
             default: () => []
+        }
+    },
+
+    data () {
+        return {
+            is_opened: false
         }
     },
 
@@ -27,6 +39,7 @@ export default {
 
     methods: {
         toggleDropdown () {
+            this.is_opened = !this.is_opened
             this.$emit('toggle-dropdown-row')
         }
     }
