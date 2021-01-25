@@ -32,6 +32,7 @@
                     DataTablePagination(
                         :default_pagination="default_pagination"
                         :total_items="total_items"
+                        :is_loading="is_loading"
                         @paginate="onPaginate"
                     )
 </template>

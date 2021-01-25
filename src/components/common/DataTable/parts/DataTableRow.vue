@@ -13,7 +13,7 @@
             :key="`${key}`"
             :data="row_data[key]"
             :field_type="field_value.type"
-            :style="{width: cell_default_widht}"
+            :style="{ width: cell_default_widht }"
         )
 </template>
 

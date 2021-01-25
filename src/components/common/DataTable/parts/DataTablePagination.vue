@@ -24,6 +24,10 @@ export default {
         total_items: {
             type: Number,
             default: () => 0
+        },
+        is_loading: {
+            type: Boolean,
+            default: () => false
         }
     },
 
@@ -48,27 +52,31 @@ export default {
 
     methods: {
         toNextPage () {
-            this.disabled_buttons.prev = false
-            if (!this.disabled_buttons.next) {
-                this.pagination.offset += this.pagination.limit
-                this.pagination.next_offset = this.pagination.offset + this.pagination.limit
-                if (this.pagination.next_offset > this.total_items) {
-                    this.disabled_buttons.next = true
-                    this.pagination.next_offset = this.total_items
+            if (!this.is_loading) {
+                this.disabled_buttons.prev = false
+                if (!this.disabled_buttons.next) {
+                    this.pagination.offset += this.pagination.limit
+                    this.pagination.next_offset = this.pagination.offset + this.pagination.limit
+                    if (this.pagination.next_offset > this.total_items) {
+                        this.disabled_buttons.next = true
+                        this.pagination.next_offset = this.total_items
+                    }
+                    this.emitPaginate()
                 }
-                this.emitPaginate()
             }
         },
 
         toPrevPage () {
-            this.disabled_buttons.next = false
-            if (!this.disabled_buttons.prev) {
-                this.pagination.next_offset = this.pagination.offset
-                this.pagination.offset -= this.pagination.limit
-                if (this.pagination.offset === 0) {
-                    this.disabled_buttons.prev = true
-                } else {
-                    this.emitPaginate()
+            if (!this.is_loading) {
+                this.disabled_buttons.next = false
+                if (!this.disabled_buttons.prev) {
+                    this.pagination.next_offset = this.pagination.offset
+                    this.pagination.offset -= this.pagination.limit
+                    if (this.pagination.offset === 0) {
+                        this.disabled_buttons.prev = true
+                    } else {
+                        this.emitPaginate()
+                    }
                 }
             }
         },
