@@ -27,6 +27,7 @@ class OrderModel {
 
     getStatus () {
         // Just dummy with part of params.
+        // In orders request we have more statuses.
         let status = this.is_paid ? 'Оплачен' : 'В ожидании оплаты'
         status = this.is_shipped ? 'Отправлен' : status
         status = this.is_completed ? 'Завершен' : status

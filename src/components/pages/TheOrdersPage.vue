@@ -8,6 +8,7 @@
         .orders-table
             DataTable(
                 :fields="table_fields",
+                :dropdown_fields="sub_fields",
                 :table_data="orders_list"
                 :total_items="orders_count"
                 :default_pagination="request_params"
@@ -46,6 +47,7 @@ export default {
             orders_list: (state) => state.orders.orders_list,
             selected_orders_list: (state) => state.orders.selected_orders_list,
             table_fields: (state) => state.orders.table_fields,
+            sub_fields: (state) => state.orders.sub_fields,
             orders_count: (state) => state.orders.orders_count,
             request_params: (state) => state.orders.request_params,
             is_loading: (state) => state.orders.status.loading

@@ -23,6 +23,7 @@
                             v-for="row_data, id of table_data"
                             :key="id"
                             :fields="fields",
+                            :dropdown_fields="dropdown_fields"
                             :row_data="row_data",
                             :all_selected="is_all_items_selected",
                             :all_unselected="is_all_items_unselected"
@@ -56,7 +57,11 @@ export default {
     props: {
         fields: {
             type: Object,
-            default: () => {}
+            requered: true
+        },
+        dropdown_fields: {
+            type: Object,
+            requered: true
         },
         table_data: {
             type: Object,

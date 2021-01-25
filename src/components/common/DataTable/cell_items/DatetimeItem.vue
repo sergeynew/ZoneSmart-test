@@ -1,5 +1,5 @@
 <template lang="pug">
-    .date-time-item {{ getFormattedTime() }}
+    .date-time-item {{ formatted_time }}
 </template>
 
 <script>
@@ -13,8 +13,8 @@ export default {
         }
     },
 
-    methods: {
-        getFormattedTime () {
+    computed: {
+        formatted_time () {
             return dateToLocaleString(this.data)
         }
     }

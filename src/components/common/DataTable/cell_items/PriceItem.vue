@@ -1,5 +1,5 @@
 <template lang="pug">
-    .price-cell-item {{ formattedPrice }}
+    .price-cell-item {{ formatted_price }}
 </template>
 
 <script>
@@ -14,9 +14,7 @@ export default {
     },
 
     computed: {
-        formattedPrice () {
-            // used priceFormatter with default params.
-            // We can easy implement currency and locale settings for application
+        formatted_price () {
             return formatPrice(this.data)
         }
     }

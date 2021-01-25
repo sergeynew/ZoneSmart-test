@@ -21,6 +21,10 @@ export const orders = {
                 title: 'Дата создания',
                 type: 'datetime'
             },
+            items: {
+                title: 'Товары',
+                type: 'dropdown'
+            },
             status: {
                 title: 'Статус',
                 type: 'text'
@@ -51,12 +55,12 @@ export const orders = {
             }
         },
         sub_fields: {
-            sku: {
-                title: 'SKU',
+            image: {
+                title: 'Изображение',
                 type: 'text'
             },
-            title: {
-                title: 'Название',
+            sku: {
+                title: 'SKU/Название',
                 type: 'text'
             },
             quantity: {
@@ -66,10 +70,6 @@ export const orders = {
             total_price: {
                 title: 'Цена',
                 type: 'price'
-            },
-            image_url: {
-                title: 'Изображение',
-                type: 'text'
             }
         },
         status: {

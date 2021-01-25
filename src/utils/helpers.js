@@ -15,6 +15,17 @@ function priceFormatter (currency = 'USD', locale = 'en-US') {
     })
 }
 
+function getEndingsForNumeral (number, titles) {
+    const cases = [2, 0, 1, 1, 1, 2]
+    if (number % 100 > 4 && number % 100 < 20) {
+        return titles[2]
+    }
+    if (number % 10 < 5) {
+        return titles[cases[number % 10]]
+    }
+    return titles[cases[5]]
+}
+
 function formatPrice (amount) {
     return priceFormatter().format(amount)
 }
@@ -22,5 +33,6 @@ function formatPrice (amount) {
 export {
     capitalize,
     dateToLocaleString,
-    formatPrice
+    formatPrice,
+    getEndingsForNumeral
 }
